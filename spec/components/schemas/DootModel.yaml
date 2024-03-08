@@ -1,0 +1,10 @@
+---
+type: object
+properties:
+    Name:
+        type: string
+        description: Name field.
+        minLength: 1
+        example: "Example name 1"
+example:
+    Name: "Example name 1"

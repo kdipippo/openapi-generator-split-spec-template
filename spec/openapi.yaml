@@ -1,0 +1,29 @@
+openapi: 3.1.0
+info:
+    description: Example API spec
+    version: v1
+    title: Example API
+    contact:
+        name: Example Team
+        email: example@example-team.com
+        url: https://www.example-team.com/
+    license:
+        name: Example License
+        url: https://www.example-license.com/
+tags:
+    - name: ExampleCall
+      description: Example call
+servers:
+    - url: https://example-server.com:1234
+paths:
+    /api/v1/example-call:
+        $ref: paths/example-call.yaml
+components:
+    schemas:
+        DootModel:
+            $ref: components/schemas/DootModel.yaml
+    securitySchemes:
+        BearerAuth:
+            type: http
+            description: Bearer token authentication.
+            scheme: bearer

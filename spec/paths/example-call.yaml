@@ -1,0 +1,100 @@
+get:
+    summary: Perform example call
+    description: Example call for figuring out how to add schema and media-type examples.
+    security:
+        - BearerAuth: []
+    tags:
+        - ExampleCall
+    operationId: getExampleCall
+    parameters:
+        - name: limit
+          description: Limit to number of results
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 10
+          example: 10
+    responses:
+        "200":
+            description: Successfully retrieved simple response objects.
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            Message:
+                                type: string
+                                description: Message response string.
+                                minLength: 1
+                                example: "Results found"
+                            Items:
+                                type: array
+                                description: Array of objects returned.
+                                items:
+                                    $ref: ../components/schemas/DootModel.yaml
+                                example:
+                                    - Name: "Example name 1"
+                                    - Name: "Example name 2"
+                            Count:
+                                type:
+                                - string
+                                - "null"
+                                description: Count of objects returned, null if error occured.
+                                example: ""
+                    examples:
+                        apiReturnedItems:
+                            summary: API returned items found.
+                            value:
+                                Message: "Results found"
+                                Items:
+                                    - Name: "Example name 1"
+                                    - Name: "Example name 2"
+                                Count: "2"
+                        apiReturnedEmpty:
+                            summary: API returned empty results.
+                            value:
+                                Message: "No results found"
+                                Items: []
+                                Count: "0"
+        "500":
+            description: Internal server error encountered.
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            Message:
+                                type: string
+                                description: Message response string.
+                                minLength: 1
+                                example: "Results found"
+                            Items:
+                                type: array
+                                description: Array of objects returned.
+                                items:
+                                    type: object
+                                    properties:
+                                        Name:
+                                            type: string
+                                            description: Name field.
+                                            minLength: 1
+                                            example: "Example name 1"
+                                    example:
+                                        Name: "Example name 1"
+                                example:
+                                    - Name: "Example name 1"
+                                    - Name: "Example name 2"
+                            Count:
+                                type:
+                                - string
+                                - "null"
+                                description: Count of objects returned, null if error occured.
+                                example: ""
+                    examples:
+                        apiErrorEncountered:
+                            summary: API error encountered.
+                            value:
+                                Message: "API error encountered"
+                                Items: []
+                                Count: null
