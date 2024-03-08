@@ -1,0 +1,14 @@
+extends:
+  - all
+
+rules:
+  # MBTATODO - depends on further investigation into the API
+  no-invalid-schema-examples: off
+  operation-4xx-response: off
+
+  # Disabling due to Trapeze API path design
+  boolean-parameter-prefixes: off  # i.e. flags $nested because (as a boolean) it should be isNested
+  no-http-verbs-in-paths: off
+  paths-kebab-case: off
+  path-segment-plural: off
+  security-defined: off  # Flags on paths/connect_token.yaml and paths/util_ping.yaml

@@ -18,8 +18,12 @@ servers:
 paths:
     /api/v1/example-call:
         $ref: './paths/example-call.yaml'
+    /api/v1/example-layer-call:
+        $ref: './paths/example-layer-call.yaml'
 components:
     schemas:
+        ExampleLayerModel:
+            $ref: './components/schemas/ExampleLayerModel.yaml'
         ExampleModel:
             $ref: './components/schemas/ExampleModel.yaml'
     securitySchemes:

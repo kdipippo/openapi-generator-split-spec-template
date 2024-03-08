@@ -1,0 +1,17 @@
+---
+type: object
+properties:
+    LayerName:
+        type: string
+        description: Layer name field.
+        minLength: 1
+        example: "Example name 1"
+    LayerModels:
+        type: array
+        description: List of ExampleModel objects.
+        items:
+            $ref: '../../openapi.yaml#/components/schemas/ExampleModel'
+example:
+    LayerName: "Example name 1"
+    LayerModels:
+        - Name: "Example name 1"

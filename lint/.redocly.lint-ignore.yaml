@@ -1,0 +1,18 @@
+# This file instructs Redocly's linter to ignore the rules contained for specific parts of your API.
+# See https://redoc.ly/docs/cli/ for more information.
+../spec/components/responses/401Unauthorized.yaml:
+  operation-4xx-problem-details-rfc7807:
+    - '#/'
+../spec/paths/v1_TaskAssignmentEmployees.yaml:
+  operation-4xx-problem-details-rfc7807:
+    - '#/delete/responses/400'
+../spec/paths/v1_TaskAssignmentEmployees_{WorkOrderLocation}_{WorkOrderYear}_{WorkOrderNumber}.yaml:
+  operation-4xx-problem-details-rfc7807:
+    - '#/post/responses/400'
+../spec/paths/v1_TaskAssignmentEmployees_{employeeOrCrewToReplace}.yaml:
+  operation-4xx-problem-details-rfc7807:
+    - '#/put/responses/400'
+    - '#/put/responses/422'
+../spec/openapi.yaml:
+  component-name-unique:
+    - '#/'
