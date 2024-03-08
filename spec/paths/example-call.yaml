@@ -32,7 +32,7 @@ get:
                                 type: array
                                 description: Array of objects returned.
                                 items:
-                                    $ref: ../components/schemas/DootModel.yaml
+                                    $ref: '../openapi.yaml#/components/schemas/ExampleModel'
                                 example:
                                     - Name: "Example name 1"
                                     - Name: "Example name 2"

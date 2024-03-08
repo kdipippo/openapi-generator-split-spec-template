@@ -17,11 +17,11 @@ servers:
     - url: https://example-server.com:1234
 paths:
     /api/v1/example-call:
-        $ref: paths/example-call.yaml
+        $ref: './paths/example-call.yaml'
 components:
     schemas:
-        DootModel:
-            $ref: components/schemas/DootModel.yaml
+        ExampleModel:
+            $ref: './components/schemas/ExampleModel.yaml'
     securitySchemes:
         BearerAuth:
             type: http

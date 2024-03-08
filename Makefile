@@ -42,8 +42,7 @@ validate-vacuum: bundle expand-yaml-parsing
 
 .PHONY: validate-openapi-generator
 validate-openapi-generator: ## Display linting results from @openapitools/openapi-generator-cli
-validate-openapi-generator: bundle expand-yaml-parsing
-	node_modules/@openapitools/openapi-generator-cli/main.js validate -i bundle.yaml --recommend
+	node_modules/@openapitools/openapi-generator-cli/main.js validate -i spec/openapi.yaml --recommend
 
 .PHONY: validate-yamllint
 validate-yamllint:          ## Display linting results from yamllint
@@ -55,15 +54,15 @@ validate-redocly:           ## Display linting results from @redocly/cli
 
 ## -----CLIENT GENERATION----------
 
-.PHONY: client-python
-client-python:              ## Generate openapi-generator Python client into python-client folder
-client-python: bundle expand-yaml-parsing
+.PHONY: python
+python:                     ## Generate openapi-generator Python client into python-client folder
+python: bundle expand-yaml-parsing
 	rm -rf python-client
 	mkdir python-client
 	node_modules/@openapitools/openapi-generator-cli/main.js generate -i bundle.yaml -g python -o python-client
 
-.PHONY: doot
-doot: bundle expand-yaml-parsing
-	rm -rf python-client
-	mkdir python-client
-	node_modules/@openapitools/openapi-generator-cli/main.js generate -i bundle.yaml -g plantuml -o doot
+.PHONY: plantuml
+plantuml:                   ## Generate openapi-generator PlantUML client into plantuml-client folder
+	rm -rf plantuml-client
+	mkdir plantuml-client
+	node_modules/@openapitools/openapi-generator-cli/main.js generate -i spec/openapi.yaml -g plantuml -o plantuml-client
