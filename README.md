@@ -12,6 +12,7 @@ Usage: make <target>
 Targets:
 help:                       ## Show the help.
 bundle:                     ## Use @redocly/cli to bundle the split YAML OpenAPI spec to one YAML file
+bundle-full:                ## Use @redocly/cli to bundle the split YAML full OpenAPI spec to one YAML file
 clean:                      ## Remove temporary generated files
 expand-yaml-parsing:        ## Expand YAML parsing to maximum, to handle large bundled YAML file
 html:                       ## Generate HTML page for vacuum's API spec linting report
@@ -21,10 +22,9 @@ validate:                   ## Display linting results from all checks
 validate-vacuum:            ## Display linting results from @quobix/vacuum
 validate-openapi-generator: ## Display linting results from @openapitools/openapi-generator-cli
 validate-yamllint:          ## Display linting results from yamllint
-validate-redocly: bundle    ## Display linting results from @redocly/cli
+validate-redocly:           ## Display linting results from @redocly/cli
 ## -----CLIENT GENERATION----------
-python:                     ## Generate openapi-generator Python client into python-client folder
-plantuml: validate-redocly  ## Generate openapi-generator PlantUML client into plantuml-client folder
+client-python:              ## Generate openapi-generator Python client into python-client folder
 ```
 
 ## Getting Started

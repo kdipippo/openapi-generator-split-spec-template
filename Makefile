@@ -68,31 +68,6 @@ validate-yamllint:          ## Display linting results from yamllint
 validate-redocly:           ## Display linting results from @redocly/cli
 	node_modules/@redocly/cli/bin/cli.js lint spec/openapi.yaml --config=lint/ruleset-redocly.yaml --format=stylish
 
-## ---PYTHON SCRIPTS LINTING-------
-
-.PHONY: show
-python-show:               ## Show the current Python environment.
-	@echo "Current environment:"
-	python3 -V
-	python3 -m site
-
-.PHONY: python-install
-python-install:             ## Install Python requirements in dev mode.
-	@echo "Don't forget to run 'make virtualenv' if you got errors."
-	python3 -m pip install -e .[test]
-
-.PHONY: python-format
-python-format:              ## Format Python scripts using black & isort.
-	python3 -m isort -l 119 scripts/
-	python3 -m black -l 119 scripts/
-
-.PHONY: python-lint
-python-lint:                ## Run pep8, black, mypy linters on Python scripts.
-	python3 -m flake8 scripts/
-	python3 -m black -l 119 --check scripts/
-	python3 -m mypy --ignore-missing-imports scripts/
-	python3 -m pylint ./scripts/**
-
 ## -----CLIENT GENERATION----------
 
 .PHONY: client-python
