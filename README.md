@@ -26,3 +26,7 @@ validate-redocly: bundle    ## Display linting results from @redocly/cli
 python:                     ## Generate openapi-generator Python client into python-client folder
 plantuml: validate-redocly  ## Generate openapi-generator PlantUML client into plantuml-client folder
 ```
+
+## Getting Started
+
+Run `npm install` to download all dependencies locally into `node_modules`.
