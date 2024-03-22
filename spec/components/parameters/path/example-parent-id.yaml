@@ -1,7 +1,7 @@
-# components/parameters/path/example-id.yaml
+# components/parameters/path/example-parent-id.yaml
 ---
 name: id
-description: ID of Example
+description: ID of ExampleParent
 in: path
 required: true
 schema:

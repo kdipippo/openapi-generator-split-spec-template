@@ -1,0 +1,27 @@
+# components/schemas/ExampleChildModel.yaml
+---
+type: object
+description: |
+  Object representing example child model, which also references its ExampleParentModels.
+properties:
+  ChildId:
+    type: string
+    description: Child ID.
+    format: uuid
+    example: "5c06345b-eb66-4f31-84ed-42847b630133"
+  ChildName:
+    type: string
+    description: Child name field.
+    minLength: 1
+    example: "Example child name 1"
+  Parents:
+    type: array
+    description: List of ExampleParentModel objects associated with child.
+    items:
+      $ref: '../../openapi.yaml#/components/schemas/ExampleParentModel'
+example:
+  ChildId: "5c06345b-eb66-4f31-84ed-42847b630133"
+  ChildName: "Example child name 1"
+  Parents:
+    - ParentId: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+      ParentName: "Example parent name 1"

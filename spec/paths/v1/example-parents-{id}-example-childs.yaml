@@ -1,15 +1,17 @@
-# paths/v1/examples-{example-id}.yaml
+# paths/v1/examples-parents-{id}-example-childs.yaml
 ---
 get:
-  summary: Get example by ID.
-  description: Basic example endpoint to return list of objects of type 'ExampleModel' by ID.
+  summary: Get children of parent by example parent ID.
+  description: |
+    An example endpoint where API reponse returns a list of objects of type 'ExampleChildModel', and 'ExampleChildModel'
+    also contains a list of objects of type 'ExampleParentModel'.
   security:
     - BearerAuth: []
   tags:
     - ExampleCall
-  operationId: getExampleById
+  operationId: getChildrenByExampleParentId
   parameters:
-    - $ref: '../../openapi.yaml#/components/parameters/example-id'
+    - $ref: '../../openapi.yaml#/components/parameters/example-parent-id'
     - $ref: '../../openapi.yaml#/components/parameters/limit'
   responses:
     "200":
@@ -26,12 +28,15 @@ get:
                 example: "Results found"
               Items:
                 type: array
-                description: Array of objects returned.
+                description: Array of ExampleChildModel objects returned.
                 items:
-                  $ref: '../../openapi.yaml#/components/schemas/ExampleModel'
+                  $ref: '../../openapi.yaml#/components/schemas/ExampleChildModel'
                 example:
-                  - Name: "Example name 1"
-                  - Name: "Example name 2"
+                  - ChildId: "5c06345b-eb66-4f31-84ed-42847b630133"
+                    ChildName: "Example child name 1"
+                    Parents:
+                      - ParentId: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+                        ParentName: "Example parent name 1"
               Count:
                 type:
                   - string
@@ -44,9 +49,12 @@ get:
               value:
                 Message: "Results found"
                 Items:
-                  - Name: "Example name 1"
-                  - Name: "Example name 2"
-                Count: "2"
+                  - ChildId: "5c06345b-eb66-4f31-84ed-42847b630133"
+                    ChildName: "Example child name 1"
+                    Parents:
+                      - ParentId: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+                        ParentName: "Example parent name 1"
+                Count: "1"
             apiReturnedEmpty:
               summary: API returned empty results.
               value:
@@ -69,20 +77,15 @@ get:
                 example: "Results found"
               Items:
                 type: array
-                description: Array of objects returned.
+                description: Array of ExampleChildModel objects returned, but API error returns empty array.
                 items:
-                  type: object
-                  properties:
-                    Name:
-                      type: string
-                      description: Name field.
-                      minLength: 1
-                      example: "Example name 1"
-                  example:
-                    Name: "Example name 1"
+                  $ref: '../../openapi.yaml#/components/schemas/ExampleChildModel'
                 example:
-                  - Name: "Example name 1"
-                  - Name: "Example name 2"
+                  - ChildId: "5c06345b-eb66-4f31-84ed-42847b630133"
+                    ChildName: "Example child name 1"
+                    Parents:
+                      - ParentId: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+                        ParentName: "Example parent name 1"
               Count:
                 type:
                   - string

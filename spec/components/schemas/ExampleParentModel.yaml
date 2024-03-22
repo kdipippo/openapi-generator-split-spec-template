@@ -1,0 +1,19 @@
+# components/schemas/ExampleParentModel.yaml
+---
+type: object
+description: |
+  Object representing example parent model.
+properties:
+  ParentId:
+    type: string
+    description: Parent ID.
+    format: uuid
+    example: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+  ParentName:
+    type: string
+    description: Parent name field.
+    minLength: 1
+    example: "Example parent name 1"
+example:
+  ParentId: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+  ParentName: "Example parent name 1"

@@ -18,23 +18,23 @@ servers:
   - url: https://example-server.com:1234/api/v1
 
 paths:
-  /examples:
-    $ref: paths/v1/examples.yaml
-  /examples/{id}:
-    $ref: paths/v1/examples-{id}.yaml
-  /examples/{id}/layers:
-    $ref: paths/v1/examples-{id}-layers.yaml
+  /example-parents:
+    $ref: paths/v1/example-parents.yaml
+  /example-parents/{id}:
+    $ref: paths/v1/example-parents-{id}.yaml
+  /example-parents/{id}/example-childs:
+    $ref: paths/v1/example-parents-{id}-example-childs.yaml
 
 components:
   schemas:
-    ExampleLayerModel:
-      $ref: components/schemas/ExampleLayerModel.yaml
-    ExampleModel:
-      $ref: components/schemas/ExampleModel.yaml
+    ExampleChildModel:
+      $ref: components/schemas/ExampleChildModel.yaml
+    ExampleParentModel:
+      $ref: components/schemas/ExampleParentModel.yaml
 
   parameters:
-    example-id:
-      $ref: components/parameters/path/example-id.yaml
+    example-parent-id:
+      $ref: components/parameters/path/example-parent-id.yaml
     limit:
       $ref: components/parameters/query/limit.yaml
 
