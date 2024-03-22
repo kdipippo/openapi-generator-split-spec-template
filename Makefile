@@ -50,7 +50,7 @@ validate-yamllint:          ## Display linting results from yamllint
 	python3 -m yamllint -c lint/ruleset-yamllint.yaml spec
 
 .PHONY: validate-redocly
-validate-redocly: bundle           ## Display linting results from @redocly/cli
+validate-redocly: bundle    ## Display linting results from @redocly/cli
 	node_modules/@redocly/cli/bin/cli.js lint bundle.yaml --config=lint/ruleset-redocly.yaml --format=stylish
 
 ## -----CLIENT GENERATION----------
@@ -63,7 +63,7 @@ python: bundle expand-yaml-parsing
 	node_modules/@openapitools/openapi-generator-cli/main.js generate -i bundle.yaml -g python -o python-client
 
 .PHONY: plantuml
-plantuml: validate-redocly         ## Generate openapi-generator PlantUML client into plantuml-client folder
+plantuml: validate-redocly  ## Generate openapi-generator PlantUML client into plantuml-client folder
 	rm -rf plantuml-client
 	mkdir plantuml-client
 	node_modules/@openapitools/openapi-generator-cli/main.js generate -i bundle.yaml -g plantuml -o plantuml-client
