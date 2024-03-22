@@ -1,0 +1,11 @@
+# components/parameters/path/example-id.yaml
+---
+name: id
+description: ID of Example
+in: path
+required: true
+schema:
+  type: string
+  format: uuid
+  example: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"
+example: "f59e24c1-8d57-4ad3-b6e7-8577fc117269"

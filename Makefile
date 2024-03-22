@@ -8,11 +8,25 @@ help:                       ## Show the help.
 
 .PHONY: bundle
 bundle:                     ## Use @redocly/cli to bundle the split YAML OpenAPI spec to one YAML file
+	touch bundle.yaml
 	rm bundle.yaml
-	node_modules/@redocly/cli/bin/cli.js bundle spec/openapi.yaml -o bundle.yaml --keep-url-references
+	node_modules/@redocly/cli/bin/cli.js bundle spec/openapi.yaml -o bundle.yaml
+
+.PHONY: bundle-full
+bundle-full:                ## Use @redocly/cli to bundle the split YAML full OpenAPI spec to one YAML file
+	# Rename full spec to 'openapi.yaml', rename smaller spec to temp name.
+	mv spec/openapi.yaml spec/openapi-temporary.yaml
+	mv spec/openapi-full.yaml spec/openapi.yaml
+	touch bundle.yaml
+	rm bundle.yaml
+	node_modules/@redocly/cli/bin/cli.js bundle spec/openapi.yaml -o bundle.yaml
+	# Undo temporary renaming.
+	mv spec/openapi.yaml spec/openapi-full.yaml
+	mv spec/openapi-temporary.yaml spec/openapi.yaml
 
 .PHONY: clean
 clean:                      ## Remove temporary generated files
+	touch bundle.yaml report.html
 	rm bundle.yaml report.html
 
 .PHONY: expand-yaml-parsing
@@ -43,27 +57,53 @@ validate-vacuum: bundle expand-yaml-parsing
 
 .PHONY: validate-openapi-generator
 validate-openapi-generator: ## Display linting results from @openapitools/openapi-generator-cli
-	node_modules/@openapitools/openapi-generator-cli/main.js validate -i spec/openapi.yaml --recommend
+validate-openapi-generator: bundle expand-yaml-parsing
+	node_modules/@openapitools/openapi-generator-cli/main.js validate -i bundle.yaml --recommend
 
 .PHONY: validate-yamllint
 validate-yamllint:          ## Display linting results from yamllint
 	python3 -m yamllint -c lint/ruleset-yamllint.yaml spec
 
 .PHONY: validate-redocly
-validate-redocly: bundle    ## Display linting results from @redocly/cli
-	node_modules/@redocly/cli/bin/cli.js lint bundle.yaml --config=lint/ruleset-redocly.yaml --format=stylish
+validate-redocly:           ## Display linting results from @redocly/cli
+	node_modules/@redocly/cli/bin/cli.js lint spec/openapi.yaml --config=lint/ruleset-redocly.yaml --format=stylish
+
+## ---PYTHON SCRIPTS LINTING-------
+
+.PHONY: show
+python-show:               ## Show the current Python environment.
+	@echo "Current environment:"
+	python3 -V
+	python3 -m site
+
+.PHONY: python-install
+python-install:             ## Install Python requirements in dev mode.
+	@echo "Don't forget to run 'make virtualenv' if you got errors."
+	python3 -m pip install -e .[test]
+
+.PHONY: python-format
+python-format:              ## Format Python scripts using black & isort.
+	python3 -m isort -l 119 scripts/
+	python3 -m black -l 119 scripts/
+
+.PHONY: python-lint
+python-lint:                ## Run pep8, black, mypy linters on Python scripts.
+	python3 -m flake8 scripts/
+	python3 -m black -l 119 --check scripts/
+	python3 -m mypy --ignore-missing-imports scripts/
+	python3 -m pylint ./scripts/**
 
 ## -----CLIENT GENERATION----------
 
-.PHONY: python
-python:                     ## Generate openapi-generator Python client into python-client folder
-python: bundle expand-yaml-parsing
+.PHONY: client-python
+client-python:              ## Generate openapi-generator Python client into python-client folder
+client-python: bundle expand-yaml-parsing
 	rm -rf python-client
 	mkdir python-client
-	node_modules/@openapitools/openapi-generator-cli/main.js generate -i bundle.yaml -g python -o python-client
-
-.PHONY: plantuml
-plantuml: validate-redocly  ## Generate openapi-generator PlantUML client into plantuml-client folder
-	rm -rf plantuml-client
-	mkdir plantuml-client
-	node_modules/@openapitools/openapi-generator-cli/main.js generate -i bundle.yaml -g plantuml -o plantuml-client
+	node_modules/@openapitools/openapi-generator-cli/main.js generate \
+		--input-spec bundle.yaml \
+		--generator-name python \
+		--output python-client \
+		--git-host github.com \
+		--git-repo-id YOUR-GENERATED-CLIENT-REPO \
+		--git-user-id YOUR-USERNAME-OR-GITHUB-ORG

@@ -1,33 +1,49 @@
+---
 openapi: 3.1.0
 info:
-    description: Example API spec
-    version: v1
-    title: Example API
-    contact:
-        name: Example Team
-        email: example@example-team.com
-        url: https://www.example-team.com/
-    license:
-        name: Example License
-        url: https://www.example-license.com/
+  description: Example API spec
+  version: v1
+  title: Example API
+  contact:
+    name: Example Team
+    email: example@example-team.com
+    url: https://www.example-team.com/
+  license:
+    name: Example License
+    url: https://www.example-license.com/
 tags:
-    - name: ExampleCall
-      description: Example call
+  - name: ExampleCall
+    description: Example call
 servers:
-    - url: https://example-server.com:1234
+  - url: https://example-server.com:1234/api/v1
+
 paths:
-    /api/v1/example-call:
-        $ref: './paths/example-call.yaml'
-    /api/v1/example-layer-call:
-        $ref: './paths/example-layer-call.yaml'
+  /examples:
+    $ref: paths/v1/examples.yaml
+  /examples/{id}:
+    $ref: paths/v1/examples-{id}.yaml
+  /examples/{id}/layers:
+    $ref: paths/v1/examples-{id}-layers.yaml
+
 components:
-    schemas:
-        ExampleLayerModel:
-            $ref: './components/schemas/ExampleLayerModel.yaml'
-        ExampleModel:
-            $ref: './components/schemas/ExampleModel.yaml'
-    securitySchemes:
-        BearerAuth:
-            type: http
-            description: Bearer token authentication.
-            scheme: bearer
+  schemas:
+    ExampleLayerModel:
+      $ref: components/schemas/ExampleLayerModel.yaml
+    ExampleModel:
+      $ref: components/schemas/ExampleModel.yaml
+
+  parameters:
+    example-id:
+      $ref: components/parameters/path/example-id.yaml
+    limit:
+      $ref: components/parameters/query/limit.yaml
+
+  responses:
+    401Unauthorized:
+      $ref: components/responses/401Unauthorized.yaml
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      description: Bearer token authentication.
+      scheme: bearer

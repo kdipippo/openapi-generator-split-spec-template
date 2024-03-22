@@ -1,0 +1,9 @@
+# components/parameters/query/limit.yaml
+---
+name: limit
+description: Limit to number of results
+in: query
+schema:
+  type: integer
+  example: 10
+example: 10
