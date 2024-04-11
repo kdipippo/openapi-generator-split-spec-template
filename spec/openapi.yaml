@@ -24,11 +24,28 @@ paths:
     $ref: paths/v1/example-parents-{id}.yaml
   /example-parents/{id}/example-childs:
     $ref: paths/v1/example-parents-{id}-example-childs.yaml
+  /example-parents/{id}/example-childs-with-pets:
+    $ref: paths/v1/example-parents-{id}-example-childs-with-pets.yaml
 
 components:
   schemas:
     ExampleChildModel:
       $ref: components/schemas/ExampleChildModel.yaml
+
+    ExampleChildWithCatModel:
+      $ref: components/schemas/ExampleChildWithCatModel.yaml
+    ExampleChildWithDogModel:
+      $ref: components/schemas/ExampleChildWithDogModel.yaml
+    ExampleChildWithPetModel:
+      oneOf:
+        - $ref: '#/components/schemas/ExampleChildWithCatModel'
+        - $ref: '#/components/schemas/ExampleChildWithDogModel'
+      discriminator:
+        propertyName: ModelType
+        mapping:
+          ExampleChildWithCat: '#/components/schemas/ExampleChildWithCatModel'
+          ExampleChildWithDog: '#/components/schemas/ExampleChildWithDogModel'
+
     ExampleParentModel:
       $ref: components/schemas/ExampleParentModel.yaml
 
