@@ -7,6 +7,9 @@ properties:
   ModelType:
     type: string
     description: Field that discerns which ModelType is being used, always "ExampleChildWithCat"
+    enum:
+      - ExampleChildWithCat
+      - ExampleChildWithDog
     example: "ExampleChildWithCat"
   ChildId:
     type: string

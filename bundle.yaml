@@ -450,6 +450,9 @@ components:
         ModelType:
           type: string
           description: Field that discerns which ModelType is being used, always "ExampleChildWithCat"
+          enum:
+            - ExampleChildWithCat
+            - ExampleChildWithDog
           example: ExampleChildWithCat
         ChildId:
           type: string
@@ -478,6 +481,9 @@ components:
         ModelType:
           type: string
           description: Field that discerns which ModelType is being used, always "ExampleChildWithDog"
+          enum:
+            - ExampleChildWithCat
+            - ExampleChildWithDog
           example: ExampleChildWithDog
         ChildId:
           type: string
