@@ -1,0 +1,32 @@
+# components/schemas/ExampleChildWithDogModel.yaml
+---
+type: object
+description: |
+  TODO
+properties:
+  ModelType:
+    type: string
+    description: Field that discerns which ModelType is being used, always "ExampleChildWithDog"
+    enum:
+      - ExampleChildWithCat
+      - ExampleChildWithDog
+    example: "ExampleChildWithDog"
+  ChildId:
+    type: string
+    description: Child ID.
+    format: uuid
+    example: "5c06345b-eb66-4f31-84ed-42847b630133"
+  ChildName:
+    type: string
+    description: Child name field.
+    minLength: 1
+    example: "Example child name 1"
+  DogName:
+    type: string
+    description: Name of dog associated to child.
+    example: "Bones"
+example:
+  ModelType: "ExampleChildWithDog"
+  ChildId: "5c06345b-eb66-4f31-84ed-42847b630133"
+  ChildName: "Example child name 1"
+  DogName: "Bones"
