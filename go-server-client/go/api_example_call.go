@@ -67,6 +67,11 @@ func (c *ExampleCallAPIController) Routes() Routes {
 			"/api/v1/example-parents",
 			c.GetExamples,
 		},
+		"GetExamplesSimple": Route{
+			strings.ToUpper("Get"),
+			"/api/v1/examples",
+			c.GetExamplesSimple,
+		},
 	}
 }
 
@@ -166,6 +171,37 @@ func (c *ExampleCallAPIController) GetExamples(w http.ResponseWriter, r *http.Re
 	} else {
 	}
 	result, err := c.service.GetExamples(r.Context(), limitParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+}
+
+// GetExamplesSimple - Get examples.
+func (c *ExampleCallAPIController) GetExamplesSimple(w http.ResponseWriter, r *http.Request) {
+	query, err := parseQuery(r.URL.RawQuery)
+	if err != nil {
+		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+		return
+	}
+	var limitParam int32
+	if query.Has("limit") {
+		param, err := parseNumericParameter[int32](
+			query.Get("limit"),
+			WithParse[int32](parseInt32),
+		)
+		if err != nil {
+			c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+			return
+		}
+
+		limitParam = param
+	} else {
+	}
+	result, err := c.service.GetExamplesSimple(r.Context(), limitParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

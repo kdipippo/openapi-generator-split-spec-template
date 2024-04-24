@@ -25,6 +25,7 @@ type ExampleCallAPIRouter interface {
 	GetChildrenByExampleParentId(http.ResponseWriter, *http.Request)
 	GetExampleParentById(http.ResponseWriter, *http.Request)
 	GetExamples(http.ResponseWriter, *http.Request)
+	GetExamplesSimple(http.ResponseWriter, *http.Request)
 }
 
 
@@ -36,4 +37,5 @@ type ExampleCallAPIServicer interface {
 	GetChildrenByExampleParentId(context.Context, string, int32) (ImplResponse, error)
 	GetExampleParentById(context.Context, string, int32) (ImplResponse, error)
 	GetExamples(context.Context, int32) (ImplResponse, error)
+	GetExamplesSimple(context.Context, int32) (ImplResponse, error)
 }

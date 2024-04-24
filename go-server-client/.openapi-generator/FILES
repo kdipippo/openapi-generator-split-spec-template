@@ -17,5 +17,6 @@ go/model_get_children_by_example_parent_id_500_response.go
 go/model_get_example_parent_by_id_500_response.go
 go/model_get_examples_200_response.go
 go/model_get_examples_500_response.go
+go/model_get_examples_simple_200_response.go
 go/routers.go
 main.go

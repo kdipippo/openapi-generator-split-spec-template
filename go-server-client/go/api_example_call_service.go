@@ -78,3 +78,14 @@ func (s *ExampleCallAPIService) GetExamples(ctx context.Context, limit int32) (I
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetExamples method not implemented")
 }
+
+// GetExamplesSimple - Get examples.
+func (s *ExampleCallAPIService) GetExamplesSimple(ctx context.Context, limit int32) (ImplResponse, error) {
+	// TODO - update GetExamplesSimple with the required logic for this service method.
+	// Add api_example_call_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+
+	// TODO: Uncomment the next line to return response Response(200, GetExamplesSimple200Response{}) or use other options such as http.Ok ...
+	// return Response(200, GetExamplesSimple200Response{}), nil
+
+	return Response(http.StatusNotImplemented, nil), errors.New("GetExamplesSimple method not implemented")
+}

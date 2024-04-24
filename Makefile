@@ -85,7 +85,7 @@ client-python: bundle expand-yaml-parsing
 
 .PHONY: client-go-server
 client-go-server:           ## Generate openapi-generator GO server client with Mux router into go-server-client folder
-client-go-server: bundle expand-yaml-parsing
+client-go-server: expand-yaml-parsing
 	rm -rf go-server-client
 	mkdir go-server-client
 	node_modules/@openapitools/openapi-generator-cli/main.js generate \

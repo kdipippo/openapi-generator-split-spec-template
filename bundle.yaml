@@ -16,6 +16,30 @@ tags:
   - name: ExampleCall
     description: Example call
 paths:
+  /examples:
+    get:
+      summary: Get examples.
+      description: Basic example endpoint to return list of objects of type 'ExampleParentModel'.
+      security:
+        - BearerAuth: []
+      tags:
+        - ExampleCall
+      operationId: getExamplesSimple
+      parameters:
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successfully retrieved simple response objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Message:
+                    type: string
+                    description: Message response string.
+                    minLength: 1
+                    example: Results found
   /example-parents:
     get:
       summary: Get examples.
