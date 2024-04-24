@@ -1,0 +1,427 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: example@example-team.com
+    name: Example Team
+    url: https://www.example-team.com/
+  description: Example API spec
+  license:
+    name: Example License
+    url: https://www.example-license.com/
+  title: Example API
+  version: v1
+servers:
+- url: https://example-server.com:1234/api/v1
+tags:
+- description: Example call
+  name: ExampleCall
+paths:
+  /example-parents:
+    get:
+      description: Basic example endpoint to return list of objects of type 'ExampleParentModel'.
+      operationId: getExamples
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                apiReturnedItems:
+                  summary: API returned items found.
+                  value:
+                    Message: Results found
+                    Items:
+                    - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+                      ParentName: Example parent name 1
+                    - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+                      ParentName: Example parent name 2
+                    Count: "2"
+                apiReturnedEmpty:
+                  summary: API returned empty results.
+                  value:
+                    Message: No results found
+                    Items: []
+                    Count: "0"
+              schema:
+                $ref: '#/components/schemas/getExamples_200_response'
+          description: Successfully retrieved simple response objects.
+        "401":
+          $ref: '#/components/responses/401Unauthorized'
+        "500":
+          content:
+            application/json:
+              examples:
+                apiErrorEncountered:
+                  summary: API error encountered.
+                  value:
+                    Message: API error encountered
+                    Items: []
+                    Count: null
+              schema:
+                $ref: '#/components/schemas/getExamples_500_response'
+          description: Internal server error encountered.
+      security:
+      - BearerAuth: []
+      summary: Get examples.
+      tags:
+      - ExampleCall
+  /example-parents/{id}:
+    get:
+      description: Basic example endpoint to return list of objects of type 'ExampleParentModel'
+        by ID.
+      operationId: getExampleParentById
+      parameters:
+      - $ref: '#/components/parameters/example-parent-id'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                apiReturnedItems:
+                  summary: API returned items found.
+                  value:
+                    Message: Results found
+                    Items:
+                    - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+                      ParentName: Example parent name 1
+                    - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+                      ParentName: Example parent name 2
+                    Count: "2"
+                apiReturnedEmpty:
+                  summary: API returned empty results.
+                  value:
+                    Message: No results found
+                    Items: []
+                    Count: "0"
+              schema:
+                $ref: '#/components/schemas/getExamples_200_response'
+          description: Successfully retrieved simple response objects.
+        "401":
+          $ref: '#/components/responses/401Unauthorized'
+        "500":
+          content:
+            application/json:
+              examples:
+                apiErrorEncountered:
+                  summary: API error encountered.
+                  value:
+                    Message: API error encountered
+                    Items: []
+                    Count: null
+              schema:
+                $ref: '#/components/schemas/getExampleParentById_500_response'
+          description: Internal server error encountered.
+      security:
+      - BearerAuth: []
+      summary: Get example parent by ID.
+      tags:
+      - ExampleCall
+  /example-parents/{id}/example-childs:
+    get:
+      description: |
+        An example endpoint where API reponse returns a list of objects of type 'ExampleChildModel', and 'ExampleChildModel'
+        also contains a list of objects of type 'ExampleParentModel'.
+      operationId: getChildrenByExampleParentId
+      parameters:
+      - $ref: '#/components/parameters/example-parent-id'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                apiReturnedItems:
+                  summary: API returned items found.
+                  value:
+                    Message: Results found
+                    Items:
+                    - ChildId: 5c06345b-eb66-4f31-84ed-42847b630133
+                      ChildName: Example child name 1
+                      Parents:
+                      - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+                        ParentName: Example parent name 1
+                    Count: "1"
+                apiReturnedEmpty:
+                  summary: API returned empty results.
+                  value:
+                    Message: No results found
+                    Items: []
+                    Count: "0"
+              schema:
+                $ref: '#/components/schemas/getChildrenByExampleParentId_200_response'
+          description: Successfully retrieved simple response objects.
+        "401":
+          $ref: '#/components/responses/401Unauthorized'
+        "500":
+          content:
+            application/json:
+              examples:
+                apiErrorEncountered:
+                  summary: API error encountered.
+                  value:
+                    Message: API error encountered
+                    Items: []
+                    Count: null
+              schema:
+                $ref: '#/components/schemas/getChildrenByExampleParentId_500_response'
+          description: Internal server error encountered.
+      security:
+      - BearerAuth: []
+      summary: Get children of parent by example parent ID.
+      tags:
+      - ExampleCall
+components:
+  parameters:
+    example-parent-id:
+      description: ID of ExampleParent
+      example: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+      explode: false
+      in: path
+      name: id
+      required: true
+      schema:
+        example: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+        format: uuid
+        type: string
+      style: simple
+    limit:
+      description: Limit to number of results
+      example: 10
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        example: 10
+        type: integer
+      style: form
+  responses:
+    "401Unauthorized":
+      content:
+        application/problem+json:
+          schema:
+            properties:
+              type:
+                default: about:blank
+                description: A URI reference that uniquely identifies the problem
+                  type in the context of the provided API.
+                example: /problem/policy-violation
+                format: uri-reference
+                type: string
+              title:
+                description: "A short summary of the problem type. Written in English\
+                  \ and readable for engineers, usually not suited for non technical\
+                  \ stakeholders and not localized."
+                example: Policy Violation
+                type: string
+              message:
+                description: Unauthorized message text.
+                example: Unauthorized
+                type: string
+      description: "401 Unauthorized, when Bearer Token authentication is invalid\
+        \ / expired."
+  schemas:
+    ExampleChildModel:
+      description: |
+        Object representing example child model, which also references its ExampleParentModels.
+      example:
+        ChildId: 5c06345b-eb66-4f31-84ed-42847b630133
+        ChildName: Example child name 1
+        Parents:
+        - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+          ParentName: Example parent name 1
+      properties:
+        ChildId:
+          description: Child ID.
+          example: 5c06345b-eb66-4f31-84ed-42847b630133
+          format: uuid
+          type: string
+        ChildName:
+          description: Child name field.
+          example: Example child name 1
+          minLength: 1
+          type: string
+        Parents:
+          description: List of ExampleParentModel objects associated with child.
+          items:
+            $ref: '#/components/schemas/ExampleParentModel'
+          type: array
+    ExampleParentModel:
+      description: |
+        Object representing example parent model.
+      example:
+        ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+        ParentName: Example parent name 1
+      properties:
+        ParentId:
+          description: Parent ID.
+          example: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+          format: uuid
+          type: string
+        ParentName:
+          description: Parent name field.
+          example: Example parent name 1
+          minLength: 1
+          type: string
+    getExamples_200_response:
+      example:
+        Message: Results found
+        Items:
+        - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+          ParentName: Example parent name 1
+        - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+          ParentName: Example parent name 2
+        Count: ""
+      properties:
+        Message:
+          description: Message response string.
+          example: Results found
+          minLength: 1
+          type: string
+        Items:
+          description: Array of objects returned.
+          example:
+          - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+            ParentName: Example parent name 1
+          - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+            ParentName: Example parent name 2
+          items:
+            $ref: '#/components/schemas/ExampleParentModel'
+          type: array
+        Count:
+          description: "Count of objects returned, null if error occured."
+          example: ""
+          nullable: true
+          type: string
+    getExamples_500_response:
+      example:
+        Message: Results found
+        Items:
+        - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+          ParentName: Example parent name 1
+        - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+          ParentName: Example parent name 2
+        Count: ""
+      properties:
+        Message:
+          description: Message response string.
+          example: Results found
+          minLength: 1
+          type: string
+        Items:
+          description: "Array of objects returned, but API error returns empty array."
+          example:
+          - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+            ParentName: Example parent name 1
+          - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+            ParentName: Example parent name 2
+          items:
+            $ref: '#/components/schemas/ExampleParentModel'
+          type: array
+        Count:
+          description: "Count of objects returned, null if error occured."
+          example: ""
+          nullable: true
+          type: string
+    getExampleParentById_500_response:
+      example:
+        Message: Results found
+        Parent:
+        - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+          ParentName: Example parent name 1
+        - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+          ParentName: Example parent name 2
+        Count: ""
+      properties:
+        Message:
+          description: Message response string.
+          example: Results found
+          minLength: 1
+          type: string
+        Parent:
+          description: "Array of objects returned, but API error returns empty array."
+          example:
+          - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+            ParentName: Example parent name 1
+          - ParentId: 128583d9-2517-43c2-a9f0-1ad4cad687cd
+            ParentName: Example parent name 2
+          items:
+            $ref: '#/components/schemas/ExampleParentModel'
+          type: array
+        Count:
+          description: "Count of objects returned, null if error occured."
+          example: ""
+          nullable: true
+          type: string
+    getChildrenByExampleParentId_200_response:
+      example:
+        Message: Results found
+        Items:
+        - ChildId: 5c06345b-eb66-4f31-84ed-42847b630133
+          ChildName: Example child name 1
+          Parents:
+          - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+            ParentName: Example parent name 1
+        Count: ""
+      properties:
+        Message:
+          description: Message response string.
+          example: Results found
+          minLength: 1
+          type: string
+        Items:
+          description: Array of ExampleChildModel objects returned.
+          example:
+          - ChildId: 5c06345b-eb66-4f31-84ed-42847b630133
+            ChildName: Example child name 1
+            Parents:
+            - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+              ParentName: Example parent name 1
+          items:
+            $ref: '#/components/schemas/ExampleChildModel'
+          type: array
+        Count:
+          description: "Count of objects returned, null if error occured."
+          example: ""
+          nullable: true
+          type: string
+    getChildrenByExampleParentId_500_response:
+      example:
+        Message: Results found
+        Items:
+        - ChildId: 5c06345b-eb66-4f31-84ed-42847b630133
+          ChildName: Example child name 1
+          Parents:
+          - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+            ParentName: Example parent name 1
+        Count: ""
+      properties:
+        Message:
+          description: Message response string.
+          example: Results found
+          minLength: 1
+          type: string
+        Items:
+          description: "Array of ExampleChildModel objects returned, but API error\
+            \ returns empty array."
+          example:
+          - ChildId: 5c06345b-eb66-4f31-84ed-42847b630133
+            ChildName: Example child name 1
+            Parents:
+            - ParentId: f59e24c1-8d57-4ad3-b6e7-8577fc117269
+              ParentName: Example parent name 1
+          items:
+            $ref: '#/components/schemas/ExampleChildModel'
+          type: array
+        Count:
+          description: "Count of objects returned, null if error occured."
+          example: ""
+          nullable: true
+          type: string
+  securitySchemes:
+    BearerAuth:
+      description: Bearer token authentication.
+      scheme: bearer
+      type: http

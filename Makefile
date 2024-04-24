@@ -82,3 +82,17 @@ client-python: bundle expand-yaml-parsing
 		--git-host github.com \
 		--git-repo-id YOUR-GENERATED-CLIENT-REPO \
 		--git-user-id YOUR-USERNAME-OR-GITHUB-ORG
+
+.PHONY: client-go-server
+client-go-server:           ## Generate openapi-generator GO server client with Mux router into go-server-client folder
+client-go-server: bundle expand-yaml-parsing
+	rm -rf go-server-client
+	mkdir go-server-client
+	node_modules/@openapitools/openapi-generator-cli/main.js generate \
+		--input-spec bundle.yaml \
+		--generator-name go-server \
+		--output go-server-client \
+		--additional-properties=router=mux \
+		--git-host github.com \
+		--git-repo-id YOUR-GENERATED-CLIENT-REPO \
+		--git-user-id YOUR-USERNAME-OR-GITHUB-ORG
